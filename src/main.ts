@@ -58,7 +58,7 @@ async function main() {
                     const bla = await fetchChartData(symbol)
     
                     if (bla) {
-                        bot.sendPhoto(message.chat.id, bla as Buffer)
+                        await bot.sendPhoto(message.chat.id, bla as Buffer)
                     }
     
                 }
