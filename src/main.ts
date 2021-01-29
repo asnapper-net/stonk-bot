@@ -63,6 +63,7 @@ async function main() {
     
                 }
             } catch(e) {
+                console.error(e)
                 bot.sendMessage(message.chat.id, 'shut up B')
             }
         }
