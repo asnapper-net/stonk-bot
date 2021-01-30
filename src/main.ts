@@ -2,6 +2,7 @@ import express from 'express'
 import TelegramBot from 'node-telegram-bot-api'
 import { AddressInfo } from 'net'
 import { fetchChartData } from './stonk'
+import './decoy'
 
 const { PORT, BOT_TOKEN, BOT_WEBHOOK_BASE_URL, RABBIT_QUEUE, RABBIT_URL } = process.env
 
