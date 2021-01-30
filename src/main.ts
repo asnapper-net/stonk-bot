@@ -1,7 +1,6 @@
 import express from 'express'
 import TelegramBot from 'node-telegram-bot-api'
 import { AddressInfo } from 'net'
-import { getRabbitSender } from './rabbit'
 import { fetchChartData } from './stonk'
 
 const { PORT, BOT_TOKEN, BOT_WEBHOOK_BASE_URL, RABBIT_QUEUE, RABBIT_URL } = process.env
@@ -17,9 +16,7 @@ const server = app.listen(PORT || 3000, async () => {
 })
 
 async function main() {
-
-    
-
+    console.log('startup')
     const bot = new TelegramBot(BOT_TOKEN as string)
 
     // const send = await getRabbitSender(RABBIT_QUEUE as string, RABBIT_URL as string)
@@ -53,22 +50,24 @@ async function main() {
             try {
     
                 const matches = message.text.match(/\$([A-Za-z]+)/)
+                console.debug({matches})
                 if (matches?.length && matches?.length > 1) {
                     const symbol = matches[1]
+                    console.debug({symbol})
+
                     const bla = await fetchChartData(symbol)
-    
+                    console.debug({buffer: bla})
                     if (bla) {
-                        await bot.sendPhoto(message.chat.id, bla as Buffer)
+                        const result = await bot.sendPhoto(message.chat.id, bla as Buffer)
+                        console.debug({result})
                     }
     
                 }
             } catch(e) {
-                console.error(e)
-                bot.sendMessage(message.chat.id, 'shut up B')
+                console.log(e)
             }
         }
 
-        // send({ message, metadata, token: BOT_TOKEN })
     })
 
 }
