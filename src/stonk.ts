@@ -83,16 +83,22 @@ const mkChart = async (data: Array<any>, symbol: string) => {
     })
     console.debug({canvasRenderService})
 
-    return await canvasRenderService.renderToBuffer(getConfiguration(data, symbol))
+    return await canvasRenderService.renderToBuffer(getConfiguration(data, symbol), 'image/png')
 }
 
 export const getChartUrl = (symbol: string) => `https://api.nasdaq.com/api/quote/${symbol.toUpperCase()}/chart?assetClass=stocks&charttype=real`
 
 export const fetchChartData = async (symbol: string) => {
     // try {
-        const { data: responseData } = await axios.get(getChartUrl(symbol), {
+        console.log({symbol})
+        const url = getChartUrl(symbol)
+        console.log({url})
+
+        const { data: responseData } = await axios.get(url, {
             responseType: 'json'
         })
+
+        console.log({responseData})
 
         const { chart } = responseData.data
         console.debug({symbol,responseData})

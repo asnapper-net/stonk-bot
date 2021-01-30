@@ -30,7 +30,6 @@
     "chart.js": "^2.9.4",
     "chartjs-node-canvas": "^3.0.8",
     "express": "^4.17.1",
-    "node-telegram-bot-api": "^0.50.0",
-    "plotter": "^0.5.0"
+    "node-telegram-bot-api": "^0.50.0"
   }
 }
