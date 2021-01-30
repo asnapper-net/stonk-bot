@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { ChartConfiguration } from 'chart.js'
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas'
-import fs from 'fs'
 
 export const getConfiguration = (data: Array<any>, symbol: string): ChartConfiguration => {
 
@@ -82,6 +81,8 @@ const mkChart = async (data: Array<any>, symbol: string) => {
         width: 400,
         height: 400
     })
+    console.debug({canvasRenderService})
+
     return await canvasRenderService.renderToBuffer(getConfiguration(data, symbol))
 }
 
@@ -94,8 +95,11 @@ export const fetchChartData = async (symbol: string) => {
         })
 
         const { chart } = responseData.data
+        console.debug({symbol,responseData})
 
         const buffer = await mkChart(chart.map((d: any) => ({ ...d, x: new Date(d.x) })), symbol)
+        console.debug({buffer})
+
         return buffer
         // fs.writeFileSync("test.png", buffer,  "binary");
     // } catch (e) {
